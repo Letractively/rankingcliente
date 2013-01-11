@@ -9,13 +9,11 @@ include "../../opciones.php";
     }
     $Conexion = mysql_connect($IPServidorMysql,$UsuarioMysql,$ContrasenaMysql);
     mysql_select_db($DbDatos,$Conexion) or die("DB Inéxistente");
-    $HashDelServer = file_get_contents("http://sgtravellers.net/ranking/anunciar/index.php?TokenGen=true"); // Aunque ahora mismo no sea necesario lo dejo para cuando le añada un sistema de caché de imágenes
-    $ContenidoRankingTotal = file_get_contents("http://sgtravellers.net/ranking/anunciar/index.php");
+    $HashDelServer = file_get_contents("http://sgtravellers.net/ranking/anunciar/index.php?TokenGen=true&cdSecreto=$cdSecreto&cocdSecreto=$cocdSecreto");
+    $ContenidoRankingTotal = file_get_contents("http://sgtravellers.net/ranking/anunciar/index.php?cdSecreto=$cdSecreto&cocdSecreto=$cocdSecreto");
         if($ContenidoRankingTotal == "PDN"){
-            echo "El servidor ha denegado la petición $SaltoDelinea";
-            die("el servidor ha denegado la petición");
+            die("el servidor ha denegado la petición $SaltoDelinea");
         }
-        //echo $HashDelServer . "<br>" . "Contenido Sin tratar : $ContenidoRankingTotal";
         $Posiciones = explode("|",$ContenidoRankingTotal);
         $i = 1;
         mysql_query("TRUNCATE `Ranking`") or die("Imposible vaciar la tabla");
@@ -30,16 +28,16 @@ include "../../opciones.php";
         // Dear Kenpachi, con este exec(Impido que la gente vea una tabla vacia, comprobando, en el php de la página, que el valor sea 0);
         while(isset($Posiciones[$i])){
             $DatosTemporales = explode(";",$Posiciones[$i]);
-            //print_r($Posiciones);
             mysql_query("INSERT INTO `Ranking` (`PosicionTotal`,`PuntosTotales`,`PuntosMejoras`,`PuntosTropas`,`PuntosNaves`,`PuntosDefensas`,`usercd`,`Avatar`,`Nick`)VALUES('" . $DatosTemporales[1] . "','" . $DatosTemporales[4] . "','" . $DatosTemporales[5] . "','" . $DatosTemporales[6] . "','" . $DatosTemporales[7] . "','" . $DatosTemporales[8] . "','" . $DatosTemporales[0] . "','" . $DatosTemporales[2] . "','" . $DatosTemporales[3] . "');");
             if(mysql_error()){
                 die(mysql_error());
             }
             $i++;
         }
-        //exec("echo 0 > ../../bloqueado.txt");
-        
-    unlink("../../bloqueado.txt");    
+        exec("echo 0 > ../../bloqueado.txt");
+        if(!is_writable("./bloqueado.txt") or !is_readable("./bloqueado.txt"){
+		die("Fatal el fichero ./bloqueado.txt NO es escribible, este fichero ES necesario $SaltoDelinea");
+	}
     mysql_close($Conexion);
     $Fin = microtime(1) - $Inicio;
     echo "El servidor ha tardado $Fin , en renegerar el ranking, con el hash $HashDelServer";

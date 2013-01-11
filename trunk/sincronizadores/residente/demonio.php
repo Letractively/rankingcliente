@@ -1,11 +1,10 @@
 <?php
 // Este sería un demonio de ejecución constante
 
-/* Se puede modificar para ejecución programa, bajo el comando at, si fuera necesario, o crontab, si no puede ser un proceso residente.
-    También se puede usar un navegador programado para abrir esto como pag web
-    Remover lineas de 9 a 11, o comentar, para habilitar el uso desde navegador
+/* Se puede modificar para ejecución programa, bajo el comando at, si fuera necesario, o crontab, si no puede ser un proceso residente utiliza la versión consola.
+    También se puede usar un navegador programado para abrir esto como pag web usando el que está dentro del directorio ../web
 */
-include "/xampp/htdocs/rankingcliente/opciones.php";
+include "../../opciones.php";
 
 if(isset($_SERVER["REMOTE_ADDR"])){
     die("Ejecución remota NO permitida, debe ejecutarse en una consola.");
@@ -22,7 +21,7 @@ while(true){
     $HashLocal = mysql_query("SELECT `Hash` FROM `Hashes` LIMIT 1;");
     $HashLocal = mysql_fetch_array($HashLocal);
     $HashLocal = $HashLocal["Hash"];
-    $HashDelServer = file_get_contents("http://sgtravellers.net/ranking/anunciar/index.php?TokenGen=true");
+    $HashDelServer = file_get_contents("http://sgtravellers.net/ranking/anunciar/index.php?TokenGen=true&cdSecreto=$cdSecreto&$cocdSecreto");
     if($HashDelServer == $HashLocal){
 	sleep(1);
 	echo "El Hash local coincidía con el del server ignorando petición\n";
@@ -44,7 +43,7 @@ while(true){
         if($Hash != $HashDelServer){
         $Hash = $HashDelServer;
 	$Inicio = microtime(1);
-        $ContenidoRankingTotal = file_get_contents("http://sgtravellers.net/ranking/anunciar/index.php");
+        $ContenidoRankingTotal = file_get_contents("http://sgtravellers.net/ranking/anunciar/index.php?cdSecreto=$cdSecreto&cocdSecreto=$cocdSecreto");
 	$Fin = microtime(1) - $Inicio;
 	$Fin = round($Fin,4);
 	echo "Se ha tardado $Fin en descargar el nuevo ranking\n";
@@ -72,6 +71,9 @@ while(true){
             $i++;
         }
         exec("echo 0 > bloqueado.txt");
+	if(!is_writable("./bloqueado.txt") or !is_readable("./bloqueado.txt"){
+		die("Fatal el fichero ./bloqueado.txt NO es escribible, este fichero ES necesario $SaltoDelinea");
+	}
         mysql_close($Conexion);
 		//die("DB Actualizada correctamente");
     }

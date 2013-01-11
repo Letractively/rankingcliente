@@ -5,8 +5,8 @@ $Inicio = microtime(1);
 include "../../opciones.php";
     $Conexion = mysql_connect($IPServidorMysql,$UsuarioMysql,$ContrasenaMysql);
     mysql_select_db($DbDatos,$Conexion) or die("DB Inéxistente");
-    $HashDelServer = file_get_contents("http://foro-sgalactic.tk/ranking/anunciar/index.php?TokenGen=true"); // Aunque ahora mismo no sea necesario lo dejo para cuando le añada un sistema de caché de imágenes
-    $ContenidoRankingTotal = file_get_contents("http://foro-sgalactic.tk/ranking/anunciar/index.php");
+    $HashDelServer = file_get_contents("http://sgtravellers.net/ranking/anunciar/index.php?TokenGen=true&cdSecreto=$cdSecreto&cocdSecreto=$cocdSecreto");
+    $ContenidoRankingTotal = file_get_contents("http://sgtravellers.net/ranking/anunciar/index.php?cdSecreto=$cdSecreto&cocdSecreto=$cocdSecreto");
         if($ContenidoRankingTotal == "PDN"){
             echo "El servidor ha denegado la petición $SaltoDelinea";
             die("el servidor ha denegado la petición");
