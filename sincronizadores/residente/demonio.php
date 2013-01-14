@@ -71,7 +71,7 @@ while(true){
             $i++;
         }
         exec("echo 0 > bloqueado.txt");
-	if(!is_writable("./bloqueado.txt") or !is_readable("./bloqueado.txt"){
+	if(!is_writable("./bloqueado.txt") or !is_readable("./bloqueado.txt")){
 		die("Fatal el fichero ./bloqueado.txt NO es escribible, este fichero ES necesario $SaltoDelinea");
 	}
         mysql_close($Conexion);

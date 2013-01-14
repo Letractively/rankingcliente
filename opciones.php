@@ -31,15 +31,13 @@ $Propietario = "Kevin Guanche Darias"; // Máx 20
 
 $EspacioMaximo = 1; // En gygabytes, decimales americanos permitidos, ejemplo 0.5 (512Mbytes)
 
-$Descripcion = "Mi torre de uso personal como servidor de firmas"; // Máx 50
+$Descripcion = "Viva que va"; // Máx 50
 
 $Formatos = array();
 // Formatos permitidos mediante identificador mime
 $Formatos[] = "image/png";
 $Formatos[] = "image/jpeg";
 $Formatos[] = "image/gif";
-
-
 
 //No tocar a partir de aqui
 $included = strtolower(realpath(__FILE__)) != strtolower(realpath($_SERVER['SCRIPT_FILENAME']));
@@ -126,6 +124,9 @@ if(isset($_GET["ConsultaInfo"])){
             }
             break;
         case "PDNGD":
+            break;
+        case "ONLINE":
+            echo "Funcionando";
             break;
         default:
             die("FATAL1(Orden no encontrada)");
