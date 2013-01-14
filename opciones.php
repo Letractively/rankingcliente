@@ -27,7 +27,7 @@ $SaltoDelinea = "\n"; // usar \n para consola y <br> para html
 // Detalles a anunciar! ( Estos detalles serán vistos por los jugadores cuando vayan a elegir firma)
 
 $SoloServidorDelJuego = false; // Requiere que solo el servidor del juego pueda soliticar información de este servidor de manera directa. Recomendado, no obstante desactivar para pruebas locales.
-$Propietario = "Kevin Guanche Darias"; // Máx 20
+$Propietario = "Kevin Guanche Darias"; // Máx 30
 
 $EspacioMaximo = 1; // En gygabytes, decimales americanos permitidos, ejemplo 0.5 (512Mbytes)
 
@@ -41,6 +41,7 @@ $Formatos[] = "image/gif";
 
 //No tocar a partir de aqui
 $included = strtolower(realpath(__FILE__)) != strtolower(realpath($_SERVER['SCRIPT_FILENAME']));
+$Version = "1.0-r6";
 if(isset($_GET["ConsultaInfo"])){
     $ArrayContenidos = array();
     @mysql_connect($IPServidorMysql,$UsuarioMysql,$ContrasenaMysql) or printf("Error al conectar a MySQL : %s(%d) en %s:%d",mysql_error(),mysql_errno(),__FILE__,__LINE__) and exit;
@@ -72,8 +73,8 @@ if(isset($_GET["ConsultaInfo"])){
             $ArrayContenidos[] = $Descripcion;
             $ArrayContenidos[] = $Formatos;
             $ArrayContenidos[] = $ConsumoBytes;
-            $ArrayContenidos[] = $EspacioDisponible; // Tal vez esto debiera ser computado en el servidor maestro del juego
-            $ArrayContenidos[] = $URLUso;
+            $ArrayContenidos[] = $EspacioDisponible;
+            //$ArrayContenidos[] = $URLUso;
             $ArrayContenidos[] = format_size(intval(disk_free_space(".")));
             if(function_exists("sys_getloadavg")){
                 $ArrayContenidos[] = sys_getloadavg();
@@ -81,6 +82,7 @@ if(isset($_GET["ConsultaInfo"])){
                 $ArrayContenidos[] = "NO_SOPORTADO_POR_EL_SO";
             }
             $ArrayContenidos[] = $Hash;
+            $ArrayContenidos[] = $Version;
             break;
         case "PROPIETARIO":
             $ArrayContenidos[] = $Propietario;
@@ -100,9 +102,11 @@ if(isset($_GET["ConsultaInfo"])){
         case "ESPDIS": // No tiene mucho sentido, puede ser computado
             $ArrayContenidos[] = $EspacioDisponible;
             break;
+        /* Obsoleto
         case "URLUSO":
             $ArrayContenidos[] = $URLUso;
             break;
+        */
         case "DISDIS": // Disco disponible
             $ArrayContenidos[] = format_size(intval(disk_free_space(".")));
             break;
@@ -126,8 +130,10 @@ if(isset($_GET["ConsultaInfo"])){
         case "PDNGD":
             break;
         case "ONLINE":
-            echo "Funcionando";
+            $ArrayContenidos[] = "Funcionando";
             break;
+        case "VERSION":
+            $ArrayContenidos[] = $Version;
         default:
             die("FATAL1(Orden no encontrada)");
             break;
