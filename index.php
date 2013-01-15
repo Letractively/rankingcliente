@@ -1,24 +1,51 @@
 <?php
 if(!$_POST["Nick"]){
     ?>
+    <style>
+        .Color{
+            background-color: black;
+            color: black;
+        }
+        table.Colores{
+            background-color: gray;
+        }
+        table.Colores tr td{
+            width: 6px;
+        }
+        table.colores tr td:hover{
+            cursor: hand;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function CAMBIAR_COLORES(Color){
+            window.document.getElementById('ColorUsar').value = Color.replace(/,/g,";");
+            window.document.getElementById('CajaColor').style.color = 'rgb(' + Color + ')';
+            window.document.getElementById('CajaColor').style.backgroundColor = 'rgb(' + Color + ')';
+        }
+    </script>
     <form name="ProFirmas" method="post" action="." enctype="multipart/form-data">
         <table>
             <tr>
                 <td>Nick :</td><td><input type="text" name="Nick"/></td>
                 <td>Contraseña : </td><td><input type="password" name="Contrasena"/></td>
-                <td>Contraseña otra vez : </td><td><input type="password" name="ContrasenaV"/></td>
+                <!--<td>Contraseña otra vez : </td><td><input type="password" name="ContrasenaV"/></td>-->
                 <td>Fichero firma(Max 640x240 a 80Kbytes) :</td><td><input type="file" name="ImagenSubida"/></td>
             </tr><tr>
-                <td>Color Letras : </td><td><input title="Formato : rojo;verde;azul, ejemplo 120;140;190" type="text" name="Color"/></td>
+                <td>Color Letras : </td><td><input type="hidden" id="ColorUsar" name="Color"/><a id="CajaColor" href="#Color" class="Color">XYZ</a></td>
                 <td colspan="2"><input type="submit" value="Enviar"/></td>
             </tr>
         </table>
     </form>
     <br>
-    <p>En el campo color, se deben de usar valores númericos de no más de 255 con el formato siguiente<br>
-    rojo;verde;azul    , por ejemplo 255;20;0 esto dará un rojo combinado con un poco de verde<br>
-    Si no se especifica el color, se usa el por defecto, osea el negro
-    </p>
+    <table class="Colores">
+        <tr>
+            <td style="color: black; background-color: black;" onclick="CAMBIAR_COLORES('0,0,0');">X</td><td style="color: rgb(100,100,100); background-color: rgb(100,100,100);" onclick="CAMBIAR_COLORES('100,100,100');">X</td><td style="color: rgb(128,0,0); background-color: rgb(128,0,0);" onclick="CAMBIAR_COLORES('128,0,0');">X</td><td style="color: rgb(128,128,0); background-color: rgb(128,128,0);" onclick="CAMBIAR_COLORES('128,128,0');">X</td><td style="color: rgb(0,128,0); background-color: rgb(0,128,0);" onclick="CAMBIAR_COLORES('0,128,0');">X</td><td style="color: rgb(0,128,128); background-color: rgb(0,128,128);" onclick="CAMBIAR_COLORES('0,128,128');">X</td><td style="color: rgb(0,0,128); background-color: rgb(0,0,128);" onclick="CAMBIAR_COLORES('0,0,128');">X</td><td style="color: rgb(128,0,128); background-color: rgb(128,0,128);" onclick="CAMBIAR_COLORES('128,0,128');">X</td><td style="color: rgb(128,128,64); background-color: rgb(128,128,64);" onclick="CAMBIAR_COLORES('128,128,64');">X</td><td style="color: rgb(0,64,64); background-color: rgb(0,64,64);" onclick="CAMBIAR_COLORES('0,64,64');">X</td><td style="color: rgb(0,128,255); background-color: rgb(0,128,255);" onclick="CAMBIAR_COLORES('0,128,255');">X</td><td style="color: rgb(0,64,128); background-color: rgb(0,64,128);" onclick="CAMBIAR_COLORES('0,64,128');">X</td><td style="color: rgb(128,0,255); background-color: rgb(128,0,255);" onclick="CAMBIAR_COLORES('128,0,255');">X</td><td style="color: rgb(128,64,0); background-color: rgb(128,64,0);" onclick="CAMBIAR_COLORES('128,64,0');">X</td>
+        </tr>
+        <tr>
+            <td style="color: rgb(255,255,255); background-color: rgb(255,255,255);" onclick="CAMBIAR_COLORES('255,255,255');">X</td><td style="color: rgb(192,192,192); background-color: rgb(192,192,192);" onclick="CAMBIAR_COLORES('192,192,192');">X</td><td style="color: rgb(255,0,0); background-color: rgb(255,0,0);" onclick="CAMBIAR_COLORES('255,0,');">X</td><td style="color: rgb(255,255,0); background-color: rgb(255,255,0);" onclick="CAMBIAR_COLORES('255,255,0');">X</td><td style="color: rgb(0,255,0); background-color: rgb(0,255,0);" onclick="CAMBIAR_COLORES('0,255,0');">X</td><td style="color: rgb(0,255,255); background-color: rgb(0,255,255);" onclick="CAMBIAR_COLORES('0,255,255');">X</td><td style="color: rgb(0,0,255); background-color: rgb(0,0,255);" onclick="CAMBIAR_COLORES('0,0,255');">X</td><td style="color: rgb(255,0,255); background-color: rgb(255,0,255);" onclick="CAMBIAR_COLORES('255,0,255');">X</td><td style="color: rgb(255,255,128); background-color: rgb(255,255,128);" onclick="CAMBIAR_COLORES('255,255,128');">X</td><td style="color: rgb(0,255,128); background-color: rgb(0,255,128);" onclick="CAMBIAR_COLORES('0,255,128');">X</td><td style="color: rgb(128,255,255); background-color: rgb(128,255,255);" onclick="CAMBIAR_COLORES('128,255,255');">X</td><td style="color: rgb(128,128,255); background-color: rgb(128,128,255);" onclick="CAMBIAR_COLORES('128,128,255');">X</td><td style="color: rgb(255,0,128); background-color: rgb(255,0,128);" onclick="CAMBIAR_COLORES('255,0,128');">X</td><td style="color: rgb(255,128,64); background-color: rgb(255,128,64);" onclick="CAMBIAR_COLORES('255,128,64');">X</td>
+        </tr>
+    </table>
     <?php
 }else{
     include "opciones.php";
@@ -55,9 +82,11 @@ if(!$_POST["Nick"]){
         }
         move_uploaded_file($_FILES["ImagenSubida"]["tmp_name"],$DirectorioImagenes . "$i$Extension") or die("Error de permisos en el servidor");
         $Nick =urlencode($_POST["Nick"]);
+        /* Es un login no entiendo el porque quise verificar la contraseña aqui
         if($_POST["Contrasena"] != $_POST["ContrasenaV"]){
             die("Las contraseñas no coinciden");
         }
+        */
         $Contrasena = urlencode($_POST["Contrasena"]);
         $Respuesta = @file_get_contents("http://sgtravellers.net/loginRemoto.php?Nick=$Nick&Contrasena=$Contrasena");
         if(!$Respuesta){

@@ -31,7 +31,7 @@ $Propietario = "Kevin Guanche Darias"; // Máx 30
 
 $EspacioMaximo = 1; // En gygabytes, decimales americanos permitidos, ejemplo 0.5 (512Mbytes)
 
-$Descripcion = "Viva que va"; // Máx 50
+$Descripcion = "IMPORTANTE: Este es para pruebas mias no lo usen D:"; // Máx 150
 
 $Formatos = array();
 // Formatos permitidos mediante identificador mime
@@ -41,7 +41,7 @@ $Formatos[] = "image/gif";
 
 //No tocar a partir de aqui
 $included = strtolower(realpath(__FILE__)) != strtolower(realpath($_SERVER['SCRIPT_FILENAME']));
-$Version = "1.0-r6";
+$Version = "1.0-r7";
 if(isset($_GET["ConsultaInfo"])){
     $ArrayContenidos = array();
     @mysql_connect($IPServidorMysql,$UsuarioMysql,$ContrasenaMysql) or printf("Error al conectar a MySQL : %s(%d) en %s:%d",mysql_error(),mysql_errno(),__FILE__,__LINE__) and exit;
